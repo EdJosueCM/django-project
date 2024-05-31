@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block content %}
+   <div class="table-container">
+    <br>
+    <h1 class="title">{{ title2 }}</h1>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Descripcion</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Marca</th>
+          <th>Categorias</th>
+          <th>Linea</th>
+          <th>Proveedor</th>
+          <th>Fecha Caducidad</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for item in products %}
+          <tr>
+          <td><img src={{item.image.url}} alt="" width="50px"> </td>
+          <td>{{item.description}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.stock}}</td>
+          <td>{{item.brand}}</td>
+          <td>{{item.get_categories}}</td>
+          <td>{{item.get_line_display}}</td>
+          <td>{{item.supplier}}</td>
+          <td>{{item.expiration_date |date:"Y-m-d"}}</td>
+          <td>{% if item.state %}
+               ✔
+              {% else %}
+               ➖
+              {% endif %}
+          </td>
+          <td>
+            <a href={% url 'core:product_update' item.id %}>✏️</a>
+            <a href={% url 'core:product_delete' item.id %}>❌</a>
+          </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+     <div class="form-group">
+      <a class="btn btn-secondary" href={% url 'core:product_create' %}>Nuevo Producto</a>
+     </div>
+  </div>
+  <style>
+    .table-container {
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+    
+    .title {
+        text-align: center;
+        font-size: 2em;
+        color: #333;
+    }
+    
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: 'Arial', sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+    
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+    
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+    
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+    
+    .styled-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+    }
+    
+    .form-group {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+    
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+    </style>
+{% endblock content  %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+ <div class="container">
+  <div class="form-container">
+    <h2 class="title">{{title2}}</h2>
+   
+    <form method="post" enctype="multipart/form-data" class="card card-body" onsubmit="validarFormulario(event)">
+        {% csrf_token %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-outline-success">
+            <a href={% url 'core:supplier_list' %} class="btn btn-outline-danger"> Cancelar </a>
+        </div>
+    </form>
+</div>
+</div>
+<script src="{% static 'js/validaciones.js' %}"></script>
+{% endblock content  %}
